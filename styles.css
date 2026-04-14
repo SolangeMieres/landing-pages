@@ -21,6 +21,34 @@ body {
     line-height: 1.6;
 }
 
+.btn-wsp-flotante {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    animation: latido 2s infinite;
+}
+
+.btn-wsp-flotante:hover {
+    transform: scale(1.1);
+}
+
+@keyframes latido {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
 /* Navegación */
 .navbar {
     display: flex;
@@ -87,36 +115,20 @@ nav a:hover {
     color: var(--primary-color);
 }
 
-/* Hero Section */
+/* Agregá o reemplazá tu clase .hero con esto */
 .hero {
-    padding: 8rem 5%;
+    background: linear-gradient(-45deg, #0A1128, #1E3A8A, #0f172a, #3730a3);
+    background-size: 400% 400%;
+    animation: gradienteDinamico 15s ease infinite;
+    color: white;
+    padding: 7rem 2rem;
     text-align: center;
-    background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
 }
 
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    color: var(--dark-bg);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+@keyframes gradienteDinamico {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Grid Layouts para Servicios y Portfolio */
@@ -151,16 +163,41 @@ h2 {
     transform: translateY(-5px);
 }
 
+
+/* Buscá donde tenés tus clases .card o .portfolio-item y agregales esta transición */
+.card, .portfolio-item {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+/* El efecto al pasar el mouse */
+.card:hover, .portfolio-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
 .card h3 {
     margin-bottom: 1rem;
     color: var(--primary-color);
 }
 
-/* Portfolio Específico */
+/* Contenedor de la imagen */
 .portfolio-img {
-    height: 200px;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
+    height: 220px; /* La "ventana" fija */
+    overflow: hidden; 
+    border-radius: 8px 8px 0 0; 
+}
+
+/* La imagen larga */
+.portfolio-img img {
+    width: 100%;
+    height: auto; /* Dejamos que sea todo lo larga que es */
+    display: block;
+    object-position: top;
+    transition: transform 4s ease-in-out; /* La velocidad del deslizamiento */
+}
+
+/* El truco de magia al pasar el mouse */
+.portfolio-item:hover .portfolio-img img {
+    transform: translateY(calc(-100% + 220px)); /* Sube la imagen hasta el final */
 }
 
 .link-proyecto {
@@ -271,3 +308,21 @@ footer p {
     visibility: visible;
     width: 100%; /* La línea se expande */
 }
+/* Estado inicial: oculto y un poco más abajo */
+.oculto {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estado final: visible y en su posición original */
+.mostrar {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Opcional: Un pequeño retraso para que las tarjetas aparezcan en cascada */
+.card:nth-child(2), .portfolio-item:nth-child(2) { transition-delay: 0.2s; }
+.card:nth-child(3), .portfolio-item:nth-child(3) { transition-delay: 0.4s; }
+.card:nth-child(4), .portfolio-item:nth-child(4) { transition-delay: 0.6s; }
+
